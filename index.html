@@ -61,6 +61,8 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <linearGradient id="whiteShirt" x2="1" y2="1"><stop stop-color="#fffefa"/><stop offset="1" stop-color="#e5e6df"/></linearGradient>
  <linearGradient id="blackSkirt" x2="1" y2="1"><stop stop-color="#37383b"/><stop offset="1" stop-color="#161c22"/></linearGradient>
  <linearGradient id="stockings" x2="1" y2="0"><stop stop-color="#302e33"/><stop offset=".45" stop-color="#63565a"/><stop offset="1" stop-color="#38333b"/></linearGradient>
+ <linearGradient id="manSkin" x1="0" y1="0" x2="1" y2=".5"><stop stop-color="#f2d7c2"/><stop offset=".6" stop-color="#e6bfa7"/><stop offset="1" stop-color="#c9957e"/></linearGradient>
+ <linearGradient id="manShirt" x1="0" y1="0" x2="1" y2=".6"><stop stop-color="#fffdf5"/><stop offset=".65" stop-color="#ece9df"/><stop offset="1" stop-color="#d2d2c8"/></linearGradient>
  <linearGradient id="womanSkin" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="#ffeadb"/><stop offset=".55" stop-color="#f2cbb8"/><stop offset="1" stop-color="#dca795"/></linearGradient>
  <linearGradient id="womanHair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#302c31"/><stop offset=".5" stop-color="#514048"/><stop offset="1" stop-color="#29272d"/></linearGradient>
  <radialGradient id="womanBlush"><stop stop-color="#d98c8c" stop-opacity=".55"/><stop offset="1" stop-color="#eab5a7" stop-opacity="0"/></radialGradient>
@@ -153,13 +155,36 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <path d="M978 579q4 5 8 0" fill="none" stroke="#c9ac7c" stroke-width="1"/><circle cx="982" cy="584" r="1.5" fill="#c9ac7c"/>
  </g>
  <ellipse id="manShadow" cx="390" cy="775" rx="45" ry="9" fill="#6d8373" opacity=".18"/>
- <g id="man" stroke-linecap="round" stroke-linejoin="round">
- <path id="legBack" fill="none" stroke="#3f5c53" stroke-width="22"/><path id="shoeBack" fill="none" stroke="#304a42" stroke-width="12"/>
- <path id="legFront" fill="none" stroke="#526e60" stroke-width="23"/><path id="shoeFront" fill="none" stroke="#304a42" stroke-width="12"/>
- <path id="torso" fill="none" stroke="#e5e2ce" stroke-width="49"/>
- <path id="shirtLine" fill="none" stroke="#c7ccb5" stroke-width="1.5"/>
- <path id="armBack" fill="none" stroke="#cfac8b" stroke-width="12"/><path id="arm" fill="none" stroke="#e0bc99" stroke-width="13"/><path id="sleeve" fill="none" stroke="#e5e2ce" stroke-width="22"/>
- <g id="manHead"><path d="M-6 19V34H8V13" fill="#cca785"/><path d="M-16-14Q-19 11-5 24Q7 30 16 14L25 10 19 1 17-17Z" fill="#d9b18e"/><path d="M-17 9Q-28-19-9-26Q7-33 20-18Q26-6 8-11L-3-5-8 10Z" fill="#334b43"/><path d="m13 1 4 1" stroke="#526051" stroke-width="1.5"/><path d="m17 15 5-1" stroke="#9b725c" stroke-width="1.4"/><path d="M-4 8q-8-8-9 1t8 7" fill="#d9b18e"/></g>
+ <g id="man" stroke-linecap="round" stroke-linejoin="round" aria-label="深色短发、米白衬衫和深灰长裤的成年男子">
+ <path id="legBack" fill="none" stroke="#41474a" stroke-width="18"/><path id="shoeBack" fill="none" stroke="#292e32" stroke-width="9"/>
+ <path id="legFront" fill="none" stroke="#555b5e" stroke-width="19"/><path id="shoeFront" fill="none" stroke="#292e32" stroke-width="9"/>
+ <path id="neck" fill="none" stroke="#ddb69e" stroke-width="13"/>
+ <path id="armBack" fill="none" stroke="#cfa78f" stroke-width="9"/>
+ <g id="torso">
+  <path d="M-8-7Q-17-5-22 1L-21 23Q-17 43-18 65L-20 74Q0 80 20 74L18 63Q17 40 22 17L21 1Q15-5 7-7Z" fill="url(#manShirt)"/>
+  <path d="M-8-7L0 3 8-7 14-3 9 11 0 5-9 11-14-3Z" fill="#fdfaf1" stroke="#c5c5bb" stroke-width=".8"/>
+  <path d="M0 5V72M-17 49l4 13m29-25-3 17M-15 71q15 3 29 0" fill="none" stroke="#c5c8bf" stroke-width=".8"/>
+  <g fill="#a6ada5"><circle cx="2" cy="20" r=".9"/><circle cx="2" cy="35" r=".9"/><circle cx="2" cy="50" r=".9"/><circle cx="2" cy="65" r=".9"/></g>
+  <path d="M7 17h10v12q-5 5-10 0Z" fill="none" stroke="#c9ccc2" stroke-width=".7"/>
+ </g>
+ <path id="arm" fill="none" stroke="url(#manSkin)" stroke-width="10"/><path id="sleeve" fill="none" stroke="url(#manShirt)" stroke-width="19"/>
+ <g id="manHand"><path d="M-4-3Q0-6 5-3L9 2Q10 5 6 5L1 4Q-4 3-4-3Z" fill="url(#manSkin)"/><path d="m3 1 4 2" fill="none" stroke="#bc8d76" stroke-width=".65"/></g>
+ <g id="manHead">
+  <path d="M-7 14L-6 31Q1 35 7 29L7 11Z" fill="url(#manSkin)"/>
+  <path d="M-5 19Q1 24 7 17L7 23Q1 28-5 25Z" fill="#b98976" opacity=".35"/>
+  <path d="M-15-12Q-14-23-1-23Q11-23 14-13L14-5Q14-1 17 3Q19 5 15 6L14 9Q17 11 13 12Q13 19 5 22Q-3 24-9 16L-14 7Z" fill="url(#manSkin)"/>
+  <path d="M-15 8Q-20 1-18-11Q-19-21-10-26Q1-32 12-24Q19-23 18-16Q13-11 6-14Q0-17-5-10L-9-2-10 9Z" fill="#302e31"/>
+  <path d="M-14-17Q-5-27 8-21M-13-12Q-7-20 2-19" fill="none" stroke="#625454" stroke-width="1.2" opacity=".55"/>
+  <path d="M-10 4Q-15-1-16 5Q-16 13-10 13L-8 8Z" fill="#e4bca4"/>
+  <path d="M-13 5q-2 3 1 5" fill="none" stroke="#b48572" stroke-width=".8"/>
+  <path d="M5-5Q9-7 12-4" fill="none" stroke="#51413c" stroke-width="1.4"/>
+  <path d="M5-1Q9-3 12 0Q9 3 5-1Z" fill="#faf5e9"/>
+  <ellipse cx="9.6" cy="-.3" rx="1.35" ry="1.65" fill="#3b3532"/>
+  <path d="M5-1Q9-3 12 0" fill="none" stroke="#5c443a" stroke-width=".7"/>
+  <path d="M13 2l1.5 3-2 .7" fill="none" stroke="#be8c75" stroke-width=".7"/>
+  <path d="M10 11q2 1 4-.3" fill="none" stroke="#a97166" stroke-width=".9"/>
+  <path d="M4 18q4 0 6-3" fill="none" stroke="#c18e79" stroke-width=".7"/>
+ </g>
  </g>
  <path id="heart" class="heart" d="M905 700C879 684 893 673 905 685C916 671 932 684 905 700Z"/>
  <!-- 前景花草 -->
@@ -174,11 +199,11 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
 'use strict';
 (() => {
  const $=id=>document.getElementById(id), story=$('story'), svg=$('scene');
- const parts=Object.fromEntries(['legBack','shoeBack','legFront','shoeFront','torso','shirtLine','armBack','arm','sleeve','manHead','manShadow','heart'].map(id=>[id,$(id)]));
+ const parts=Object.fromEntries(['legBack','shoeBack','legFront','shoeFront','torso','neck','manHand','armBack','arm','sleeve','manHead','manShadow','heart'].map(id=>[id,$(id)]));
  const duration=18, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let elapsed=0,last=0,playing=false,started=false,visible=false,manualPause=false,frame=0;
  const clamp=n=>Math.max(0,Math.min(1,n)), ease=n=>{n=clamp(n);return n*n*(3-2*n)}, mix=(a,b,n)=>a+(b-a)*n;
- const standing={hip:[760,684],shoulder:[764,612],head:[767,575],k1:[743,726],f1:[739,768],k2:[781,725],f2:[785,768],elbow:[779,650],hand:[782,686],angle:0};
+ const standing={hip:[760,684],shoulder:[764,612],head:[767,572],k1:[743,726],f1:[739,768],k2:[781,725],f2:[785,768],elbow:[779,650],hand:[782,686],angle:0};
  const kneeling={hip:[778,711],shoulder:[797,658],head:[810,621],k1:[753,765],f1:[720,768],k2:[827,723],f2:[840,768],elbow:[832,696],hand:[894,747],angle:14};
  const kissing={hip:[791,713],shoulder:[862,710],head:[901,716],k1:[763,765],f1:[729,768],k2:[836,727],f2:[848,768],elbow:[865,745],hand:[900,754],angle:70};
  function blend(a,b,t){const result={};for(const k in a)result[k]=Array.isArray(a[k])?a[k].map((v,i)=>mix(v,b[k][i],t)):mix(a[k],b[k],t);return result}
@@ -191,7 +216,11 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
   else p=blend(kissing,kissing,0);
   line(parts.legBack,[p.hip,p.k1,p.f1]);line(parts.shoeBack,[[p.f1[0]-8,p.f1[1]+2],[p.f1[0]+12,p.f1[1]+2]]);
   line(parts.legFront,[p.hip,p.k2,p.f2]);line(parts.shoeFront,[[p.f2[0]-5,p.f2[1]+2],[p.f2[0]+17,p.f2[1]+2]]);
-  line(parts.torso,[p.hip,p.shoulder]);line(parts.shirtLine,[[p.hip[0]+13,p.hip[1]-5],[p.shoulder[0]+12,p.shoulder[1]+7]]);
+  const dx=p.hip[0]-p.shoulder[0],dy=p.hip[1]-p.shoulder[1],bodyAngle=Math.atan2(-dx,dy)*180/Math.PI;
+  parts.torso.setAttribute('transform',`translate(${p.shoulder}) rotate(${bodyAngle}) scale(1,${Math.hypot(dx,dy)/74})`);
+  const headAngle=p.angle*Math.PI/180;
+  line(parts.neck,[p.shoulder,[p.head[0]-Math.sin(headAngle)*21,p.head[1]+Math.cos(headAngle)*21]]);
+  parts.manHand.setAttribute('transform',`translate(${p.hand}) rotate(${Math.atan2(p.hand[1]-p.elbow[1],p.hand[0]-p.elbow[0])*180/Math.PI})`);
   line(parts.armBack,[[p.shoulder[0]-10,p.shoulder[1]+4],[p.elbow[0]-9,p.elbow[1]+5],[p.hand[0]-9,p.hand[1]+3]]);
   line(parts.arm,[p.shoulder,p.elbow,p.hand]);line(parts.sleeve,[p.shoulder,[mix(p.shoulder[0],p.elbow[0],.54),mix(p.shoulder[1],p.elbow[1],.54)]]);
   parts.manHead.setAttribute('transform',`translate(${p.head}) rotate(${p.angle})`);parts.manShadow.setAttribute('cx',p.hip[0]);parts.manShadow.setAttribute('rx',t>7?68:43);
