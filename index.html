@@ -156,8 +156,8 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  </g>
  <ellipse id="manShadow" cx="390" cy="775" rx="45" ry="9" fill="#6d8373" opacity=".18"/>
  <g id="man" stroke-linecap="round" stroke-linejoin="round" aria-label="深色短发、米白衬衫和深灰长裤的成年男子">
- <path id="legBack" fill="none" stroke="#41474a" stroke-width="23"/><path id="shoeBack" fill="none" stroke="#292e32" stroke-width="9"/>
- <path id="legFront" fill="none" stroke="#555b5e" stroke-width="24"/><path id="shoeFront" fill="none" stroke="#292e32" stroke-width="9"/>
+ <path id="legBack" fill="none" stroke="#41474a" stroke-width="21"/><path id="shoeBack" fill="none" stroke="#292e32" stroke-width="9"/>
+ <path id="legFront" fill="none" stroke="#555b5e" stroke-width="22"/><path id="shoeFront" fill="none" stroke="#292e32" stroke-width="9"/>
  <path id="neck" fill="none" stroke="#ddb69e" stroke-width="13"/>
  <path id="armBack" fill="none" stroke="#cfa78f" stroke-width="11"/>
  <g id="torso">
@@ -195,6 +195,7 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <div class="controls"><button id="toggle" type="button" aria-label="播放动画">▷ 播放</button><div class="track" role="progressbar" aria-label="动画进度" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0"><div id="progress" class="progress"></div></div><span id="time" class="time">00:00 / 00:18</span><button id="replay" type="button" aria-label="重新播放动画">↻ 重播</button></div>
 </section>
 <noscript><p style="text-align:center">请启用 JavaScript 以播放动画。</p></noscript>
+<script src="./motion.js?v=natural1"></script>
 <script>
 'use strict';
 (() => {
@@ -203,28 +204,20 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  const duration=18, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let elapsed=0,last=0,playing=false,started=false,visible=false,manualPause=false,frame=0;
  const clamp=n=>Math.max(0,Math.min(1,n)), ease=n=>{n=clamp(n);return n*n*(3-2*n)}, mix=(a,b,n)=>a+(b-a)*n;
- const standing={hip:[760,584],shoulder:[764,470],head:[767,432],k1:[750,676],f1:[739,768],k2:[772,676],f2:[785,768],elbow:[780,527],hand:[787,581],angle:0};
- const kneeling={hip:[736,680],shoulder:[772,572],head:[787,537],k1:[694,765],f1:[602,768],k2:[826,680],f2:[850,768],elbow:[812,624],hand:[839,670],angle:14};
- const kissing={hip:[746,712],shoulder:[859,728],head:[897,731],k1:[668,765],f1:[576,768],k2:[834,682],f2:[850,768],elbow:[850,765],hand:[900,754],angle:70};
- function blend(a,b,t){const result={};for(const k in a)result[k]=Array.isArray(a[k])?a[k].map((v,i)=>mix(v,b[k][i],t)):mix(a[k],b[k],t);return result}
  function line(el,points){el.setAttribute('d',points.map((p,i)=>(i?'L':'M')+p.join(',')).join(' '))}
  function pose(t){
-  let p;
-  if(t<7){p=blend(standing,standing,0);const travel=mix(570,760,ease(t/7)),stride=Math.sin(t*7.8)*15*Math.min(1,(7-t)*2,t*2),bob=Math.abs(Math.sin(t*7.8))*2;for(const k in p)if(Array.isArray(p[k]))p[k][0]+=travel-760;p.k1[0]+=stride*.65;p.f1[0]+=stride;p.k2[0]-=stride*.65;p.f2[0]-=stride;p.f1[1]-=Math.max(0,stride)*.35;p.f2[1]-=Math.max(0,-stride)*.35;p.head[1]-=bob;p.shoulder[1]-=bob;p.elbow[0]-=stride*.45;p.hand[0]-=stride*.8;
-  }else if(t<10)p=blend(standing,kneeling,ease((t-7)/3));
-  else if(t<13.5)p=blend(kneeling,kissing,ease((t-10)/3.5));
-  else p=blend(kissing,kissing,0);
+  const p=DaliMotion.pose(t);
   line(parts.legBack,[p.hip,p.k1,p.f1]);line(parts.shoeBack,[[p.f1[0]-8,p.f1[1]+2],[p.f1[0]+12,p.f1[1]+2]]);
   line(parts.legFront,[p.hip,p.k2,p.f2]);line(parts.shoeFront,[[p.f2[0]-5,p.f2[1]+2],[p.f2[0]+17,p.f2[1]+2]]);
   const dx=p.hip[0]-p.shoulder[0],dy=p.hip[1]-p.shoulder[1],bodyAngle=Math.atan2(-dx,dy)*180/Math.PI;
-  parts.torso.setAttribute('transform',`translate(${p.shoulder}) rotate(${bodyAngle}) scale(1.2,${Math.hypot(dx,dy)/74})`);
+  parts.torso.setAttribute('transform',`translate(${p.shoulder}) rotate(${bodyAngle}) scale(1.15,${Math.hypot(dx,dy)/74})`);
   const headAngle=p.angle*Math.PI/180;
   line(parts.neck,[p.shoulder,[p.head[0]-Math.sin(headAngle)*21,p.head[1]+Math.cos(headAngle)*21]]);
   parts.manHand.setAttribute('transform',`translate(${p.hand}) rotate(${Math.atan2(p.hand[1]-p.elbow[1],p.hand[0]-p.elbow[0])*180/Math.PI})`);
-  line(parts.armBack,[[p.shoulder[0]-10,p.shoulder[1]+4],[p.elbow[0]-9,p.elbow[1]+5],[p.hand[0]-9,p.hand[1]+3]]);
+  line(parts.armBack,[p.shoulder,p.elbowBack,p.handBack]);
   line(parts.arm,[p.shoulder,p.elbow,p.hand]);line(parts.sleeve,[p.shoulder,[mix(p.shoulder[0],p.elbow[0],.54),mix(p.shoulder[1],p.elbow[1],.54)]]);
-  parts.manHead.setAttribute('transform',`translate(${p.head}) rotate(${p.angle}) scale(1.08)`);parts.manShadow.setAttribute('cx',p.hip[0]);parts.manShadow.setAttribute('rx',t>7?68:43);
-  const affection=ease((t-13.4)/1.6);parts.heart.style.opacity=affection*.85;parts.heart.setAttribute('transform',`translate(0,${-affection*12})`);
+  parts.manHead.setAttribute('transform',`translate(${p.head}) rotate(${p.angle}) scale(1.03)`);parts.manShadow.setAttribute('cx',p.hip[0]);parts.manShadow.setAttribute('rx',t>7?68:43);
+  const affection=ease((t-14.5)/1.6);parts.heart.style.opacity=affection*.85;parts.heart.setAttribute('transform',`translate(0,${-affection*12})`);
   $('womanHead').setAttribute('transform',`rotate(${-ease((t-8)/5)*3} 982 566)`);
  }
  function render(){pose(elapsed);$('progress').style.width=(elapsed/duration*100)+'%';$('time').textContent=`00:${String(Math.floor(elapsed)).padStart(2,'0')} / 00:18`;document.querySelector('.track').setAttribute('aria-valuenow',elapsed.toFixed(1));}
