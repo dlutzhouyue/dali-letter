@@ -170,20 +170,23 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <path id="arm" fill="none" stroke="url(#manSkin)" stroke-width="12"/><path id="sleeve" fill="none" stroke="url(#manShirt)" stroke-width="23"/>
  <g id="manHand"><path d="M-4-3Q0-6 5-3L9 2Q10 5 6 5L1 4Q-4 3-4-3Z" fill="url(#manSkin)"/><path d="m3 1 4 2" fill="none" stroke="#bc8d76" stroke-width=".65"/></g>
  <g id="manHead">
-  <path d="M-7 14L-6 31Q1 35 7 29L7 11Z" fill="url(#manSkin)"/>
-  <path d="M-5 19Q1 24 7 17L7 23Q1 28-5 25Z" fill="#b98976" opacity=".35"/>
-  <path d="M-15-12Q-14-23-1-23Q11-23 14-13L14-5Q14-1 17 3Q19 5 15 6L14 9Q17 11 13 12Q13 19 5 22Q-3 24-9 16L-14 7Z" fill="url(#manSkin)"/>
-  <path d="M-15 8Q-20 1-18-11Q-19-21-10-26Q1-32 12-24Q19-23 18-16Q13-11 6-14Q0-17-5-10L-9-2-10 9Z" fill="#302e31"/>
-  <path d="M-14-17Q-5-27 8-21M-13-12Q-7-20 2-19" fill="none" stroke="#625454" stroke-width="1.2" opacity=".55"/>
-  <path d="M-10 4Q-15-1-16 5Q-16 13-10 13L-8 8Z" fill="#e4bca4"/>
-  <path d="M-13 5q-2 3 1 5" fill="none" stroke="#b48572" stroke-width=".8"/>
-  <path d="M5-5Q9-7 12-4" fill="none" stroke="#51413c" stroke-width="1.4"/>
-  <path d="M5-1Q9-3 12 0Q9 3 5-1Z" fill="#faf5e9"/>
-  <ellipse cx="9.6" cy="-.3" rx="1.35" ry="1.65" fill="#3b3532"/>
-  <path d="M5-1Q9-3 12 0" fill="none" stroke="#5c443a" stroke-width=".7"/>
-  <path d="M13 2l1.5 3-2 .7" fill="none" stroke="#be8c75" stroke-width=".7"/>
-  <path d="M10 11q2 1 4-.3" fill="none" stroke="#a97166" stroke-width=".9"/>
-  <path d="M4 18q4 0 6-3" fill="none" stroke="#c18e79" stroke-width=".7"/>
+  <path d="M-7 14L-6 31Q1 34 7 29L7 12Z" fill="url(#manSkin)"/>
+  <path d="M-6 19Q0 24 7 18L7 23Q0 27-5 24Z" fill="#c69280" opacity=".25"/>
+  <!-- Three-quarter face with a rounded jaw and restrained features. -->
+  <path d="M-13-14C-8-23 4-23 11-17C16-12 16-4 15 2C18 5 17 6 14 7C14 14 10 20 4 22C-2 24-9 19-12 12C-16 4-17-6-13-14Z" fill="url(#manSkin)"/>
+  <path d="M-13 6C-20 2-21-13-15-21C-11-28-1-30 8-26C16-26 21-20 17-14C13-10 7-12 3-16C-1-11-8-11-10-4L-11 8Z" fill="#373037"/>
+  <path d="M-15-16C-9-24 1-26 10-22M-11-13C-7-18-2-20 3-20" fill="none" stroke="#76616a" stroke-width="1" opacity=".55"/>
+  <path d="M-12 3C-18-2-18 8-13 11L-10 8Z" fill="#e5bdac"/>
+  <path d="M-14 4q-2 3 1 4" fill="none" stroke="#bc8e7e" stroke-width=".7"/>
+  <path d="M-6-4Q-2-6 1-4M7-5Q10-6 13-4" fill="none" stroke="#6a4e46" stroke-width="1.05"/>
+  <path d="M-6 0Q-2-2 1 0Q-2 2-6 0M7-1Q10-3 13-1Q10 1 7-1" fill="#fff8ed"/>
+  <ellipse cx="-1.8" cy=".1" rx="1.2" ry="1.35" fill="#59443c"/><ellipse cx="10.3" cy="-.8" rx="1.15" ry="1.3" fill="#59443c"/>
+  <path d="M-6 0Q-2-2 1 0M7-1Q10-3 13-1" fill="none" stroke="#6a4e46" stroke-width=".65"/>
+  <path d="M6 2L7 7Q9 8 10 6" fill="none" stroke="#c38f7f" stroke-width=".65"/>
+  <path d="M3 12Q7 13 10 11.5" fill="none" stroke="#ad7a72" stroke-width=".85"/>
+  <path d="M5 15h3" stroke="#fff0df" stroke-width=".7" opacity=".7"/>
+  <ellipse cx="-5" cy="7" rx="4" ry="2.2" fill="#da9e93" opacity=".12"/>
+
  </g>
  </g>
  <path id="heart" class="heart" d="M905 700C879 684 893 673 905 685C916 671 932 684 905 700Z"/>
@@ -195,7 +198,7 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <div class="controls"><button id="toggle" type="button" aria-label="播放动画">▷ 播放</button><div class="track" role="progressbar" aria-label="动画进度" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0"><div id="progress" class="progress"></div></div><span id="time" class="time">00:00 / 00:18</span><button id="replay" type="button" aria-label="重新播放动画">↻ 重播</button></div>
 </section>
 <noscript><p style="text-align:center">请启用 JavaScript 以播放动画。</p></noscript>
-<script src="./motion.js?v=natural1"></script>
+<script src="./motion.js?v=space2"></script>
 <script>
 'use strict';
 (() => {

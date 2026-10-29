@@ -19,7 +19,7 @@
  const kneelingAngle=Math.atan2(868-rearKnee[0],rearKnee[1]-692)*180/Math.PI;
  function pose(time){
   const t=Math.max(0,Math.min(18,time)),q=6*ease(t/6.4);
-  let hip=[635+37.5*q,615.55],f1=[616.25,ground],f2=[653.75,ground],lean=4,bow=0;
+  let hip=[575+37.5*q,615.55],f1=[556.25,ground],f2=[593.75,ground],lean=4,bow=0;
   const feet=[f1,f2];
   // The support foot stays at its world position. Only the other foot swings.
   for(let i=0;i<6;i++){
@@ -32,19 +32,19 @@
   hip[1]=ground-Math.sqrt(153.6**2-(hip[0]-support[0])**2);
   if(t>=7){
    const step=ease((t-7)/1.2);
-   hip=point([860,ground-Math.sqrt(153.6**2-18.75**2)],[868,626],step);
-   f1=[841.25,ground];f2=[mix(878.75,902,step),ground-8*Math.sin(Math.PI*step)**2];
+   hip=point([800,ground-Math.sqrt(153.6**2-18.75**2)],[868,642],step);
+   f1=[781.25,ground];f2=[mix(818.75,902,step),ground-8*Math.sin(Math.PI*step)**2];
   }
   if(t>=8.2){
    const lower=ease((t-8.2)/2.3);
-   hip=point([868,626],[868,692],lower);
-   f1=[mix(841.25,762,lower),ground-12*Math.sin(Math.PI*lower)**2];f2=[902,ground];lean=mix(4,18,lower);
+   hip=point([868,642],[868,692],lower);
+   f1=[mix(781.25,762,lower),ground-12*Math.sin(Math.PI*lower)**2];f2=[902,ground];lean=mix(4,0,lower);
   }
   if(t>=11.2){
    bow=ease((t-11.2)/3.3);
    const angle=radians(mix(kneelingAngle,-65,bow));
    hip=[rearKnee[0]+thigh*Math.sin(angle),rearKnee[1]-thigh*Math.cos(angle)];
-   lean=mix(18,85,bow);
+   lean=mix(0,85,bow);
   }
   const rear=joint(hip,f1,thigh,calf),front=joint(hip,f2,thigh,calf);
   const shoulder=[hip[0]+torso*Math.sin(radians(lean)),hip[1]-torso*Math.cos(radians(lean))];

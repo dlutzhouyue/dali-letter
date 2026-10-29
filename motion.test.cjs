@@ -21,3 +21,8 @@ test('walking, stopping, kneeling and bowing connect without position jumps',()=
   for(const key of ['hip','shoulder','head','k1','k2','f1','f2','hand','handBack'])assert.ok(distance(a[key],b[key])<.05,`${key} jumps at ${t}`);
  }
 });
+test('standing and upright kneeling leave room in front of the woman',()=>{
+ assert.ok(pose(6.5).head[0]<820,'standing face should leave a clear gap');
+ assert.ok(pose(10.5).head[0]<890,'kneeling face should not crowd her');
+ for(let t=7;t<=8.2;t+=.05)assert.ok(distance(pose(t).f1,[781.25,768])<.001,'rear foot must stay planted during the approach');
+});
