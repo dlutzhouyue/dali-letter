@@ -1,7 +1,7 @@
 /* Fixed-length, two-bone poses in the scene's SVG coordinates. */
 (function(root){
  'use strict';
- const duration=28,loopStart=16.5,ground=768,thigh=78,calf=76,torso=94,arm=44;
+ const duration=28.5,loopStart=16.5,ground=768,thigh=78,calf=76,torso=94,arm=44;
  const clamp=x=>Math.max(0,Math.min(1,x));
  const ease=x=>{x=clamp(x);return x*x*x*(x*(x*6-15)+10)};
  const mix=(a,b,u)=>a+(b-a)*u;
@@ -71,10 +71,16 @@
   return {hip,shoulder,head,k1:rear.bend,k2:front.bend,f1:rear.end,f2:front.end,elbow:reach.bend,hand:reach.end,elbowBack:reachBack.bend,handBack:reachBack.end,angle:lean-15*bow};
  }
  function footPose(time){
-  // Lift after the kiss settles, then keep the foot in place throughout the loop.
+  // Settle above the head, then repeat a four-second lift and return.
   const lift=ease((time-15)/1.5);
   const hip=[972,678],target=point([965,753],[922,693],lift);
   target[1]-=18*Math.sin(Math.PI*lift)**2;
+  if(time>=loopStart){
+   const phase=(time-loopStart)%4;
+   const rise=ease((phase-.6)/1.2)*(1-ease((phase-2)/.8));
+   target[0]+=4*rise;
+   target[1]-=28*rise;
+  }
   const leg=joint(hip,target,40,36,-1);
   return {hip,knee:leg.bend,ankle:leg.end,lift};
  }
