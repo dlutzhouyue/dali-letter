@@ -43,18 +43,20 @@ test('kneeling legs stay behind the woman’s extended shoe',()=>{
   assert.ok(p.f2[0]+22<880,'front shoe must leave a visible gap');
  }
 });
-test('the kiss is held before a slow lift and a longer ending',()=>{
+test('he keeps his head lowered throughout the ending',()=>{
  assert.equal(require('./motion.js').duration,28);
  assert.deepEqual(pose(15),pose(19));
- assert.ok(pose(24.5).head[1]<pose(19).head[1]-100);
+ assert.deepEqual(pose(24.5),pose(19));
+ assert.deepEqual(pose(120),pose(19));
  assert.deepEqual(pose(24.5),pose(28));
 });
 
-test('the other foot rests above the head and returns before he lifts',()=>{
+test('the other foot stays above the head after it is placed',()=>{
  const {footPose}=require('./motion.js');
  assert.deepEqual(footPose(14.5).ankle,[965,753]);
  assert.deepEqual(footPose(17).ankle,[922,693]);
- assert.deepEqual(footPose(19.5).ankle,[965,753]);
+ assert.deepEqual(footPose(19.5).ankle,[922,693]);
+ assert.deepEqual(footPose(120).ankle,[922,693]);
  for(let t=0;t<=28;t+=1/60){
   const p=footPose(t);
   assert.ok(Math.abs(distance(p.hip,p.knee)-40)<.01);
@@ -62,5 +64,19 @@ test('the other foot rests above the head and returns before he lifts',()=>{
  }
  for(const t of [15,16.5,17.8,19.3]){
   assert.ok(distance(footPose(t-.0001).ankle,footPose(t+.0001).ankle)<.05);
+ }
+});
+
+test('the ending loops seamlessly without restarting the approach',()=>{
+ const {loopTime,footPose,duration,loopStart}=require('./motion.js');
+ assert.equal(loopTime(10),10);
+ assert.equal(loopTime(duration),loopStart);
+ assert.deepEqual(pose(duration),pose(loopStart));
+ assert.deepEqual(footPose(duration),footPose(loopStart));
+ for(let t=duration;t<300;t+=.13){
+  const wrapped=loopTime(t);
+  assert.ok(wrapped>=loopStart&&wrapped<duration);
+  assert.deepEqual(pose(wrapped),pose(17));
+  assert.deepEqual(footPose(wrapped),footPose(17));
  }
 });
