@@ -96,10 +96,12 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <g id="woman" aria-label="长卷发、精致五官的成年女子，穿白色短袖、黑色短裙、黑色丝袜与黑色高跟鞋">
  <!-- 从裙摆到脚踝使用连续曲线，膝盖与小腿保持自然方向。 -->
  <path id="womanLegBack" d="M968 672C975 669 983 674 982 684C981 701 978 715 974 731C972 740 970 749 970 756L960 758C961 747 962 738 964 729C966 713 965 700 963 687C962 680 963 675 968 672Z" fill="url(#stockings)"/>
+ <g id="womanShoeBack">
  <path d="M959 752Q966 761 973 748L980 751 979 761 975 762 975 776 972 776 970 763Q961 773 946 775L933 775Q930 771 939 768L950 764Z" fill="#191d25"/>
  <path d="M940 770Q951 770 959 764M976 756l-2 15" fill="none" stroke="#8a8190" stroke-width="1.2"/>
+ </g>
  <path id="womanLegFront" d="M947 670C954 667 962 670 964 677C965 683 960 690 955 697C948 707 940 716 932 725C927 731 924 736 921 740L912 735C916 728 922 720 927 711C933 700 936 691 938 681C939 675 942 671 947 670Z" fill="url(#stockings)"/>
- <path d="M950 682C945 697 934 715 922 731M974 687C974 710 969 732 966 749" fill="none" stroke="#be9da0" stroke-width="2" opacity=".25" stroke-linecap="round"/>
+ <path d="M950 682C945 697 934 715 922 731" fill="none" stroke="#be9da0" stroke-width="2" opacity=".25" stroke-linecap="round"/>
  <path d="M916 731Q914 739 906 741L891 746Q881 751 890 753L907 753Q917 750 922 741L925 741 928 757 932 757 931 736 926 728 922 729Q920 736 916 731Z" fill="#1b1f28"/>
  <path d="M890 749Q901 749 910 744M926 738 929 751" fill="none" stroke="#968a97" stroke-width="1.3"/>
  <!-- 自然收腰、柔软的短袖和裙摆。 -->
@@ -189,6 +191,7 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
 
  </g>
  </g>
+ <use href="#womanShoeBack" aria-hidden="true"/>
  <path id="heart" class="heart" d="M905 700C879 684 893 673 905 685C916 671 932 684 905 700Z"/>
  <!-- 前景花草 -->
  <g class="flower" fill="none" stroke="#698772" stroke-width="2"><path d="M100 887Q127 786 84 686M113 852q52-59 42-114M98 856q-38-57-50-84"/><use href="#leaf" transform="translate(111 799)"/><use href="#leaf" transform="translate(111 830) scale(-1 1)"/><use href="#leaf" transform="translate(96 750) scale(.65)"/><g fill="#f0e3c6" stroke="#c9b78f" stroke-width=".8"><path d="M84 698q-28-6-17-19q-9-18 9-17q12-16 17 2q24-1 11 16q1 18-20 18Z"/><path d="M155 750q-22-5-14-17q-5-15 10-12q10-11 15 4q18 4 6 15q-2 14-17 10Z"/></g><g fill="#b79b64" stroke="none"><circle cx="84" cy="679" r="5"/><circle cx="156" cy="735" r="4"/></g></g>
@@ -198,18 +201,28 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <div class="controls"><button id="toggle" type="button" aria-label="播放动画">▷ 播放</button><div class="track" role="progressbar" aria-label="动画进度" aria-valuemin="0" aria-valuemax="28" aria-valuenow="0"><div id="progress" class="progress"></div></div><span id="time" class="time">00:00 / 00:28</span><button id="replay" type="button" aria-label="重新播放动画">↻ 重播</button></div>
 </section>
 <noscript><p style="text-align:center">请启用 JavaScript 以播放动画。</p></noscript>
-<script src="./motion.js?v=space-ending4"></script>
+<script src="./motion.js?v=foot5"></script>
 <script>
 'use strict';
 (() => {
  const $=id=>document.getElementById(id), story=$('story'), svg=$('scene');
- const parts=Object.fromEntries(['legBack','shoeBack','legFront','shoeFront','torso','neck','manHand','armBack','arm','sleeve','manHead','manShadow','heart'].map(id=>[id,$(id)]));
+ const parts=Object.fromEntries(['legBack','shoeBack','legFront','shoeFront','torso','neck','manHand','armBack','arm','sleeve','manHead','manShadow','heart','womanLegBack','womanShoeBack'].map(id=>[id,$(id)]));
  const duration=DaliMotion.duration, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let elapsed=0,last=0,playing=false,started=false,visible=false,manualPause=false,frame=0;
  const clamp=n=>Math.max(0,Math.min(1,n)), ease=n=>{n=clamp(n);return n*n*(3-2*n)}, mix=(a,b,n)=>a+(b-a)*n;
  function line(el,points){el.setAttribute('d',points.map((p,i)=>(i?'L':'M')+p.join(',')).join(' '))}
+ function womanLeg(p){
+  const normal=(a,b)=>{const d=Math.hypot(b[0]-a[0],b[1]-a[1]);return [(b[1]-a[1])/d,-(b[0]-a[0])/d]};
+  const upper=normal(p.hip,p.knee),lower=normal(p.knee,p.ankle);
+  const kneeNormal=[(upper[0]+lower[0])/2,(upper[1]+lower[1])/2];
+  const offset=(v,n,w)=>[v[0]+n[0]*w,v[1]+n[1]*w];
+  const outline=[offset(p.hip,upper,8),offset(p.knee,kneeNormal,7),offset(p.ankle,lower,5),offset(p.ankle,lower,-5),offset(p.knee,kneeNormal,-7),offset(p.hip,upper,-8)];
+  parts.womanLegBack.setAttribute('d',outline.map((v,i)=>(i?'L':'M')+v).join(' ')+'Z');
+  parts.womanShoeBack.setAttribute('transform',`translate(${p.ankle[0]-965},${p.ankle[1]-753})`);
+ }
  function pose(t){
   const p=DaliMotion.pose(t);
+  womanLeg(DaliMotion.footPose(t));
   line(parts.legBack,[p.hip,p.k1,p.f1]);line(parts.shoeBack,[[p.f1[0]-8,p.f1[1]+2],[p.f1[0]+12,p.f1[1]+2]]);
   line(parts.legFront,[p.hip,p.k2,p.f2]);line(parts.shoeFront,[[p.f2[0]-5,p.f2[1]+2],[p.f2[0]+17,p.f2[1]+2]]);
   const dx=p.hip[0]-p.shoulder[0],dy=p.hip[1]-p.shoulder[1],bodyAngle=Math.atan2(-dx,dy)*180/Math.PI;

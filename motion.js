@@ -70,7 +70,15 @@
   const reach=joint(shoulder,hand,arm,arm,-1),reachBack=joint(shoulder,handBack,arm,arm,1);
   return {hip,shoulder,head,k1:rear.bend,k2:front.bend,f1:rear.end,f2:front.end,elbow:reach.bend,hand:reach.end,elbowBack:reachBack.bend,handBack:reachBack.end,angle:lean-15*bow};
  }
- const api={pose,duration};
+ function footPose(time){
+  // Lift only after the kiss settles, and clear his head before he rises.
+  const lift=ease((time-15)/1.5)*(1-ease((time-17.8)/1.5));
+  const hip=[972,678],target=point([965,753],[922,693],lift);
+  target[1]-=18*Math.sin(Math.PI*lift)**2;
+  const leg=joint(hip,target,40,36,-1);
+  return {hip,knee:leg.bend,ankle:leg.end,lift};
+ }
+ const api={pose,footPose,duration};
  if(typeof module==='object'&&module.exports)module.exports=api;
  else root.DaliMotion=api;
 })(typeof globalThis==='object'?globalThis:this);

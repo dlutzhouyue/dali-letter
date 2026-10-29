@@ -49,3 +49,18 @@ test('the kiss is held before a slow lift and a longer ending',()=>{
  assert.ok(pose(24.5).head[1]<pose(19).head[1]-100);
  assert.deepEqual(pose(24.5),pose(28));
 });
+
+test('the other foot rests above the head and returns before he lifts',()=>{
+ const {footPose}=require('./motion.js');
+ assert.deepEqual(footPose(14.5).ankle,[965,753]);
+ assert.deepEqual(footPose(17).ankle,[922,693]);
+ assert.deepEqual(footPose(19.5).ankle,[965,753]);
+ for(let t=0;t<=28;t+=1/60){
+  const p=footPose(t);
+  assert.ok(Math.abs(distance(p.hip,p.knee)-40)<.01);
+  assert.ok(Math.abs(distance(p.knee,p.ankle)-36)<.01);
+ }
+ for(const t of [15,16.5,17.8,19.3]){
+  assert.ok(distance(footPose(t-.0001).ankle,footPose(t+.0001).ankle)<.05);
+ }
+});
