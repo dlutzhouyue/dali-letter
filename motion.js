@@ -30,14 +30,20 @@
   // Keep the supporting leg nearly straight; the swinging knee does the bending.
   const support=feet[1-Math.min(5,Math.floor(q))%2];
   hip[1]=ground-Math.sqrt(153.6**2-(hip[0]-support[0])**2);
-  if(t>=7){
-   const step=ease((t-7)/1.2);
-   hip=point([800,ground-Math.sqrt(153.6**2-18.75**2)],[868,642],step);
+  // Begin lowering while still at the farther stop, with both feet planted.
+  if(t>=6.4){
+   const crouch=ease((t-6.4)/1);
+   hip=point([800,ground-Math.sqrt(153.6**2-18.75**2)],[800,665],crouch);
+   f1=[781.25,ground];f2=[818.75,ground];
+  }
+  if(t>=7.4){
+   const step=ease((t-7.4)/1.2);
+   hip=point([800,665],[850,685],step);
    f1=[781.25,ground];f2=[mix(818.75,902,step),ground-8*Math.sin(Math.PI*step)**2];
   }
-  if(t>=8.2){
-   const lower=ease((t-8.2)/2.3);
-   hip=point([868,642],[868,692],lower);
+  if(t>=8.6){
+   const lower=ease((t-8.6)/1.9);
+   hip=point([850,685],[868,692],lower);
    f1=[mix(781.25,762,lower),ground-12*Math.sin(Math.PI*lower)**2];f2=[902,ground];lean=mix(4,0,lower);
   }
   if(t>=11.2){
@@ -54,7 +60,7 @@
    const swing=sign*15*Math.sin(Math.PI*q),upper=radians(7+swing),lower=radians(16+swing);
    return [shoulder[0]+arm*(Math.sin(upper)+Math.sin(lower)),shoulder[1]+arm*(Math.cos(upper)+Math.cos(lower))];
   }
-  const rest=ease((t-7)/3.5);
+  const rest=ease((t-6.4)/4.1);
   let hand=point(hangingHand(1),[front.bend[0]-14,front.bend[1]-22],rest);
   let handBack=point(hangingHand(-1),[hip[0]-2,hip[1]-8],rest);
   hand=point(hand,[899,748],bow);

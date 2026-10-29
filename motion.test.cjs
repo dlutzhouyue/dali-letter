@@ -12,11 +12,11 @@ test('limb and torso lengths stay fixed throughout the animation',()=>{
 });
 test('weight-bearing feet and kneeling knee do not slide',()=>{
  for(let t=0;t<1.4;t+=.1)assert.deepEqual(pose(t).f2,pose(0).f2);
- for(let t=8.2;t<=18;t+=.1)assert.deepEqual(pose(t).f2,[902,768]);
+ for(let t=8.6;t<=18;t+=.1)assert.deepEqual(pose(t).f2,[902,768]);
  for(let t=11.2;t<=18;t+=.1){assert.deepEqual(pose(t).f1,[762,768]);assert.ok(distance(pose(t).k1,pose(11.2).k1)<.001);}
 });
 test('walking, stopping, kneeling and bowing connect without position jumps',()=>{
- for(const t of [6.4,7,8.2,10.5,11.2,14.5]){
+ for(const t of [6.4,7.4,8.6,10.5,11.2,14.5]){
   const a=pose(t-.0001),b=pose(t+.0001);
   for(const key of ['hip','shoulder','head','k1','k2','f1','f2','hand','handBack'])assert.ok(distance(a[key],b[key])<.05,`${key} jumps at ${t}`);
  }
@@ -24,5 +24,14 @@ test('walking, stopping, kneeling and bowing connect without position jumps',()=
 test('standing and upright kneeling leave room in front of the woman',()=>{
  assert.ok(pose(6.5).head[0]<820,'standing face should leave a clear gap');
  assert.ok(pose(10.5).head[0]<890,'kneeling face should not crowd her');
- for(let t=7;t<=8.2;t+=.05)assert.ok(distance(pose(t).f1,[781.25,768])<.001,'rear foot must stay planted during the approach');
+ for(let t=6.4;t<=8.6;t+=.05)assert.ok(distance(pose(t).f1,[781.25,768])<.001,'rear foot must stay planted during the approach');
+});
+
+test('kneeling starts in place before the closer approach',()=>{
+ for(let t=6.4;t<=7.4;t+=.05){
+  assert.equal(pose(t).hip[0],800);
+  assert.ok(distance(pose(t).f1,[781.25,768])<.001);
+  assert.ok(distance(pose(t).f2,[818.75,768])<.001);
+ }
+ assert.ok(pose(7.3).hip[1]>660,'hips should already be lowered at the farther position');
 });
