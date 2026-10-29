@@ -78,8 +78,8 @@
   if(time>=loopStart){
    const phase=(time-loopStart)%4;
    const rise=ease((phase-.6)/1.2)*(1-ease((phase-2)/.8));
-   target[0]+=4*rise;
-   target[1]-=28*rise;
+   target[0]+=1*rise;
+   target[1]-=8*rise;
   }
   const leg=joint(hip,target,40,36,-1);
   return {hip,knee:leg.bend,ankle:leg.end,lift};

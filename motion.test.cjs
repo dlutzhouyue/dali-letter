@@ -57,7 +57,8 @@ test('the other foot lifts and returns to the same head contact point',()=>{
  assert.deepEqual(footPose(17).ankle,[922,693]);
  assert.deepEqual(footPose(19.5).ankle,[922,693]);
  assert.deepEqual(footPose(120).ankle,[922,693]);
- assert.ok(footPose(18.4).ankle[1]<footPose(17).ankle[1]-25);
+ const height=footPose(17).ankle[1]-footPose(18.4).ankle[1];
+ assert.ok(height>=6&&height<=10,'repeated lift should stay small');
  for(let t=16.5;t<24.5;t+=.1)assert.ok(distance(footPose(t).ankle,footPose(t+4).ankle)<.001);
  for(let t=0;t<=28.5;t+=1/60){
   const p=footPose(t);
