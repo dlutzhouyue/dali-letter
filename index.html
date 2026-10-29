@@ -195,16 +195,16 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
  <g transform="translate(1430 30) scale(-1 1)" opacity=".7"><path d="M0 870Q80 720 65 657M50 778q70-49 65-100" fill="none" stroke="#81957b" stroke-width="3"/><use href="#leaf" transform="translate(61 738) scale(1.4)"/><use href="#leaf" transform="translate(70 711) scale(-1 1)"/><use href="#leaf" transform="translate(48 803) scale(-1.5 1.5)"/></g>
 
  </svg>
- <div class="controls"><button id="toggle" type="button" aria-label="播放动画">▷ 播放</button><div class="track" role="progressbar" aria-label="动画进度" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0"><div id="progress" class="progress"></div></div><span id="time" class="time">00:00 / 00:18</span><button id="replay" type="button" aria-label="重新播放动画">↻ 重播</button></div>
+ <div class="controls"><button id="toggle" type="button" aria-label="播放动画">▷ 播放</button><div class="track" role="progressbar" aria-label="动画进度" aria-valuemin="0" aria-valuemax="28" aria-valuenow="0"><div id="progress" class="progress"></div></div><span id="time" class="time">00:00 / 00:28</span><button id="replay" type="button" aria-label="重新播放动画">↻ 重播</button></div>
 </section>
 <noscript><p style="text-align:center">请启用 JavaScript 以播放动画。</p></noscript>
-<script src="./motion.js?v=early3"></script>
+<script src="./motion.js?v=space-ending4"></script>
 <script>
 'use strict';
 (() => {
  const $=id=>document.getElementById(id), story=$('story'), svg=$('scene');
  const parts=Object.fromEntries(['legBack','shoeBack','legFront','shoeFront','torso','neck','manHand','armBack','arm','sleeve','manHead','manShadow','heart'].map(id=>[id,$(id)]));
- const duration=18, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const duration=DaliMotion.duration, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let elapsed=0,last=0,playing=false,started=false,visible=false,manualPause=false,frame=0;
  const clamp=n=>Math.max(0,Math.min(1,n)), ease=n=>{n=clamp(n);return n*n*(3-2*n)}, mix=(a,b,n)=>a+(b-a)*n;
  function line(el,points){el.setAttribute('d',points.map((p,i)=>(i?'L':'M')+p.join(',')).join(' '))}
@@ -223,7 +223,7 @@ html{background:#e2e6dd}body{max-width:480px;margin:0 auto;box-shadow:0 0 70px #
   const affection=ease((t-14.5)/1.6);parts.heart.style.opacity=affection*.85;parts.heart.setAttribute('transform',`translate(0,${-affection*12})`);
   $('womanHead').setAttribute('transform',`rotate(${-ease((t-8)/5)*3} 982 566)`);
  }
- function render(){pose(elapsed);$('progress').style.width=(elapsed/duration*100)+'%';$('time').textContent=`00:${String(Math.floor(elapsed)).padStart(2,'0')} / 00:18`;document.querySelector('.track').setAttribute('aria-valuenow',elapsed.toFixed(1));}
+ function render(){pose(elapsed);$('progress').style.width=(elapsed/duration*100)+'%';$('time').textContent=`00:${String(Math.floor(elapsed)).padStart(2,'0')} / 00:${String(duration).padStart(2,'0')}`;document.querySelector('.track').setAttribute('aria-valuenow',elapsed.toFixed(1));}
  function sync(){const active=playing&&visible&&!document.hidden;story.classList.toggle('ambient-paused',!active);$('toggle').textContent=playing?'Ⅱ 暂停':elapsed>=duration?'▷ 重播':'▷ 播放';$('toggle').setAttribute('aria-label',playing?'暂停动画':elapsed>=duration?'重新播放动画':'播放动画');cancelAnimationFrame(frame);last=0;if(active)frame=requestAnimationFrame(tick)}
  function tick(now){if(last)elapsed=Math.min(duration,elapsed+(now-last)/1000);last=now;render();if(elapsed>=duration){playing=false;sync();return}frame=requestAnimationFrame(tick)}
  function play(reset=false){if(reset||elapsed>=duration)elapsed=0;started=true;manualPause=false;playing=true;render();sync()}
